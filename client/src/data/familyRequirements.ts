@@ -5,8 +5,8 @@ import {
   UserLove02Icon,
 } from "@hugeicons/core-free-icons";
 
-const filingGuide =
-  "https://www.sjc.gov.qa/UserManuals/%D9%82%D9%8A%D8%AF%20%D8%A7%D9%84%D8%AF%D8%B9%D8%A7%D9%88%D9%89%20-%20%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%85%D9%88%D9%86.pdf";
+const officialManualsDirectory =
+  "https://www.sjc.gov.qa/ar/Pages/UserManuals.aspx";
 
 export const familyRequirements = [
   {
@@ -29,7 +29,7 @@ export const familyRequirements = [
       "A bundle of documents supporting the request.",
       "The claimant’s IBAN certificate.",
     ],
-    href: filingGuide,
+    href: officialManualsDirectory,
   },
   {
     id: "requirements-custody",
@@ -51,7 +51,7 @@ export const familyRequirements = [
       "A bundle of documents supporting the request.",
       "Power of attorney details when filing through a lawyer.",
     ],
-    href: filingGuide,
+    href: officialManualsDirectory,
   },
   {
     id: "requirements-alimony",
@@ -72,7 +72,7 @@ export const familyRequirements = [
       "The claimant’s IBAN certificate.",
       "A clear list of maintenance elements and financial requests in the statement of claim.",
     ],
-    href: "https://encyclop.sjc.gov.qa/lawlib/Images/court_family/laws/22-2006/1.pdf",
+    href: officialManualsDirectory,
   },
   {
     id: "requirements-documentation",
@@ -94,6 +94,6 @@ export const familyRequirements = [
       "Attachments requested by the system for the selected documentation type.",
       "Confirmation that the information is correct before submission.",
     ],
-    href: "https://www.sjc.gov.qa/ar/Pages/family-services.aspx",
+    href: officialManualsDirectory,
   },
 ] as const;

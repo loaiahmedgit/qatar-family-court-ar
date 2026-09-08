@@ -9,7 +9,7 @@ import {
   X,
 } from "lucide-react";
 
-import familyCourtLogo from "../../../qatar-family-court-ar-assets/family-court-header-logo_ef716b29.png";
+import familyCourtLogo from "../assets/brand/family-court-logo.png";
 import { useLanguage } from "../contexts/LanguageContext";
 import { sitePath } from "../lib/sitePath";
 import { FamilyCourtNavigation } from "./FamilyCourtNavigation";

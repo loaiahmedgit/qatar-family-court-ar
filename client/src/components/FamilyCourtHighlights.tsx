@@ -11,7 +11,7 @@ const highlights = [
       en: "File cases and follow requests, hearings and judicial procedures.",
     },
     href: "/family-services#litigation-services",
-    iconSrc: "/assets/highlights/litigation-gavel.png",
+    iconSrc: "/images/highlights/litigation-gavel.png",
   },
   {
     title: { ar: "خدمات التوثيقات الأسرية", en: "Family documentation" },
@@ -20,7 +20,7 @@ const highlights = [
       en: "Family documentation procedures, records and related services.",
     },
     href: "/family-services#family-documentation",
-    iconSrc: "/assets/highlights/family-documentation.png",
+    iconSrc: "/images/highlights/family-documentation.png",
   },
   {
     title: { ar: "الصلح والإرشاد الأسري", en: "Family reconciliation" },
@@ -29,7 +29,7 @@ const highlights = [
       en: "Reconciliation, guidance and family support services.",
     },
     href: "/family-services#family-reconciliation",
-    iconSrc: "/assets/highlights/family-reconciliation.png",
+    iconSrc: "/images/highlights/family-reconciliation.png",
   },
   {
     title: { ar: "النسخ والمستندات", en: "Copies and documents" },
@@ -38,7 +38,7 @@ const highlights = [
       en: "Requests for official copies and related judicial documents.",
     },
     href: "/family-services#copies-documents",
-    iconSrc: "/assets/highlights/copies-documents.png",
+    iconSrc: "/images/highlights/copies-documents.png",
   },
 ] as const;
 

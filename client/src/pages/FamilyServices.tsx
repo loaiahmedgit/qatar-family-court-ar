@@ -18,9 +18,9 @@ import { courtServiceGroups } from "../data/familyServices";
 import { familyServiceEnglishCopy } from "../data/familyServicesEnglish";
 import { familyRequirements } from "../data/familyRequirements";
 import { sitePath } from "../lib/sitePath";
-import familyCourtLogo from "../../../qatar-family-court-ar-assets/family-court-header-logo_ef716b29.png";
-import familyCourtBuildingArabic from "../../../qatar-family-court-ar-assets/qatar-family-court-hero-left-expanded-flag-fixed.png";
-import familyCourtBuildingEnglish from "../../../qatar-family-court-ar-assets/qatar-family-court-hero-right-expanded-flag-fixed.png";
+import familyCourtLogo from "../assets/brand/family-court-logo.png";
+import familyCourtBuildingArabic from "../assets/hero/family-court-ar.png";
+import familyCourtBuildingEnglish from "../assets/hero/family-court-en.png";
 import "./FamilyServices.css";
 
 const mobileLinks = [
@@ -35,10 +35,10 @@ const mobileLinks = [
 ] as const;
 
 const serviceGroupIconImages: Record<string, string> = {
-  "litigation-services": "/assets/highlights/litigation-gavel.png",
-  "family-documentation": "/assets/highlights/family-documentation.png",
-  "family-reconciliation": "/assets/highlights/family-reconciliation.png",
-  "copies-documents": "/assets/highlights/copies-documents.png",
+  "litigation-services": "/images/highlights/litigation-gavel.png",
+  "family-documentation": "/images/highlights/family-documentation.png",
+  "family-reconciliation": "/images/highlights/family-reconciliation.png",
+  "copies-documents": "/images/highlights/copies-documents.png",
 };
 
 type AboutView =
@@ -117,16 +117,16 @@ const officialLinks = {
 
 const pageCopy = {
   ar: {
-    title: "الخدمات والمتطلبات | محكمة الأسرة",
-    shareText: "دليل خدمات محكمة الأسرة ومتطلبات الإجراءات",
+    title: "عن محكمة الأسرة | دولة قطر",
+    shareText: "صفحة تعريفية عن محكمة الأسرة في دولة قطر",
     skip: "تجاوز إلى المحتوى",
     brandLabel: "العودة إلى الصفحة الرئيسية لمحكمة الأسرة",
     buildingAlt: "مبنى محكمة الأسرة في دولة قطر",
     home: "الرئيسية",
     courtServices: "خدمات المحكمة",
-    pageName: "الخدمات والمتطلبات",
+    pageName: "عن محكمة الأسرة",
     heroText:
-      "بوابة مبسطة للتعرّف على الخدمات والمتطلبات الأساسية قبل بدء الإجراء.",
+      "تعرّف على محكمة الأسرة ودورها واختصاصاتها ضمن المنظومة القضائية في دولة قطر.",
     breadcrumb: "مسار الصفحة",
     pageSections: "أقسام الصفحة",
     about: "عن المحكمة",
@@ -254,16 +254,16 @@ const pageCopy = {
     backToTop: "العودة إلى الأعلى",
   },
   en: {
-    title: "Services and requirements | Family Court",
-    shareText: "Family Court services and procedural requirements guide",
+    title: "About the Family Court | State of Qatar",
+    shareText: "An introduction to the Family Court in the State of Qatar",
     skip: "Skip to content",
     brandLabel: "Return to the Family Court homepage",
     buildingAlt: "Family Court building in the State of Qatar",
     home: "Home",
     courtServices: "Court services",
-    pageName: "Services and requirements",
+    pageName: "About the Family Court",
     heroText:
-      "A clear guide to essential services and requirements before you begin a procedure.",
+      "Learn about the Family Court, its role and jurisdiction within Qatar’s judicial system, and the information and services available to court users.",
     breadcrumb: "Breadcrumb",
     pageSections: "Page sections",
     about: "About the Court",
@@ -574,8 +574,6 @@ export default function FamilyServices() {
           <nav aria-label={copy.breadcrumb}>
             <a href={sitePath("/")}>{copy.home}</a>
             <i>{isEnglish ? "›" : "‹"}</i>
-            <a href={sitePath("/#services")}>{copy.courtServices}</a>
-            <i>{isEnglish ? "›" : "‹"}</i>
             <strong>{copy.pageName}</strong>
           </nav>
           <h1 id="quf-page-title">{copy.pageName}</h1>
@@ -748,7 +746,7 @@ export default function FamilyServices() {
                 <figure>
                   <img
                     src={sitePath(
-                      "/assets/court-president-harib-al-muhannadi.jpg"
+                      "/images/people/court-president-harib-al-muhannadi.jpg"
                     )}
                     alt={copy.presidentPhotoAlt}
                     width={1200}

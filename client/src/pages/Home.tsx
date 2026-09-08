@@ -32,11 +32,11 @@ import { SiteRating } from "../components/SiteRating";
 import { useLanguage } from "../contexts/LanguageContext";
 import { familyRequirements } from "../data/familyRequirements";
 import { sitePath } from "../lib/sitePath";
-import familyCourtLogo from "../../../qatar-family-court-ar-assets/family-court-header-logo_ef716b29.png";
-import guidanceIllustration from "../../../qatar-family-court-ar-assets/qfc-guidance-illustration.png";
-import portalPattern from "../../../qatar-family-court-ar-assets/qfc-portal-pattern.png";
-import heroPhotoArabic from "../../../qatar-family-court-ar-assets/qatar-family-court-hero-left-expanded-flag-fixed.png";
-import heroPhotoEnglish from "../../../qatar-family-court-ar-assets/qatar-family-court-hero-right-expanded-flag-fixed.png";
+import familyCourtLogo from "../assets/brand/family-court-logo.png";
+import heroPhotoArabic from "../assets/hero/family-court-ar.png";
+import heroPhotoEnglish from "../assets/hero/family-court-en.png";
+import guidanceIllustration from "../assets/illustrations/family-guidance.png";
+import portalPattern from "../assets/patterns/portal-geometric.png";
 
 const homeCopy = {
   ar: {

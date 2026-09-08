@@ -819,6 +819,72 @@ html {
     --site-anchor-gap: 16px;
   }
 }
+
+/* Compact mobile navigation panel and narrow-screen heading safeguards. */
+@media (max-width: 820px) {
+  .mobile-nav {
+    position: absolute;
+    top: 100%;
+    right: auto;
+    left: 14px;
+    width: min(360px, calc(100% - 28px));
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px;
+    overflow: hidden;
+    background: #fffdf9;
+    border: 1px solid rgba(82, 74, 62, .16);
+    border-radius: 12px;
+    box-shadow: 0 18px 45px rgba(30, 52, 55, .18);
+  }
+
+  .mobile-nav a {
+    min-height: 48px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    color: #293d3f;
+    background: transparent;
+    border-bottom: 1px solid rgba(82, 74, 62, .12);
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .mobile-nav a:last-of-type { border-bottom: 0; }
+
+  .mobile-nav .mobile-language-toggle {
+    grid-column: auto;
+    min-height: 48px;
+    margin-top: 4px;
+    border-radius: 8px;
+  }
+
+  :is(.qfc-page, .quf-page)[dir="ltr"] .mobile-nav {
+    right: 14px;
+    left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-section,
+  .intro-title-block,
+  .intro-title-block h2 {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .intro-title-block h2 {
+    font-size: clamp(27px, 9vw, 34px);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .intro-title-block h2 br { display: none; }
+
+  .section-number::after { display: none; }
+}
 .guidance-copy li strong {
   color: #1e3437;
 }
