@@ -1,4 +1,8 @@
-import { courtServiceGroups } from "./familyServices";
+import {
+  courtServiceGroupPaths,
+  courtServiceGroups,
+  courtServiceSectionPaths,
+} from "./familyServices";
 import { familyServiceEnglishCopy } from "./familyServicesEnglish";
 import { familyRequirements } from "./familyRequirements";
 
@@ -163,17 +167,18 @@ const staticKnowledge: KnowledgeEntry[] = [
       "المحكمة شنو تسوي",
       "مش عارف المحكمة بتعمل ايه",
     ],
-    text: "تختص محكمة الأسرة بالدعاوى والمنازعات المتعلقة بالأسرة والتركات، ومنها الطلاق والحضانة والنفقة والتوثيقات الأسرية، إلى جانب الصلح والإرشاد الأسري. اكتب موضوعك بطريقتك وسأوجّهك إلى المسار المناسب.",
+    text: "تختص محكمة الأسرة بالدعاوى والمنازعات المتعلقة بالأسرة والتركات، وتعرض خدمات التقاضي والخدمات الرضائية والتصالح والإرشاد الأسري وشؤون المحضونين. اكتب موضوعك بطريقتك وسأوجّهك إلى المسار المناسب.",
     gulfText:
-      "تختص محكمة الأسرة بالدعاوى والمنازعات المتعلقة بالأسرة والتركات، مثل الطلاق والحضانة والنفقة والتوثيقات الأسرية، إضافة إلى الصلح والإرشاد الأسري. اكتب موضوعك بطريقتك وسأوجّهك إلى المسار المناسب.",
+      "تختص محكمة الأسرة بالدعاوى والمنازعات المتعلقة بالأسرة والتركات، وتعرض خدمات التقاضي والخدمات الرضائية والتصالح والإرشاد الأسري وشؤون المحضونين. اكتب موضوعك بطريقتك وسأوجّهك إلى المسار المناسب.",
     links: [
       pageLink("استعراض خدمات المحكمة", "/family-services#services-view"),
       pageLink("فتح دليل المتطلبات", "/family-services#requirements-guide"),
       pageLink("الموقع وبيانات التواصل", "/family-services#about-location"),
       pageLink(
-        "الصلح والإرشاد الأسري",
-        "/family-services#family-reconciliation"
+        "التصالح والإرشاد الأسري",
+        "/family-services/reconciliation-guidance"
       ),
+      pageLink("شؤون المحضونين", "/family-services/custodial-affairs"),
     ],
   },
   {
@@ -190,16 +195,16 @@ const staticKnowledge: KnowledgeEntry[] = [
     gulfText:
       "يسعدني توجيهك. اكتب باختصار شنو الإجراء اللي تحتاجه أو صف حالتك بطريقتك، مثل: طلاق، حضانة، نفقة، توثيق، صلح أسري، أو طلب نسخة من مستند. وتقدر كذلك تستعرض فئات الخدمات التالية.",
     links: [
-      pageLink("خدمات التقاضي", "/family-services#litigation-services"),
+      pageLink("خدمات التقاضي", "/family-services/litigation"),
       pageLink(
-        "خدمات التوثيقات الأسرية",
-        "/family-services#family-documentation"
+        "الخدمات الرضائية",
+        "/family-services/consensual"
       ),
       pageLink(
-        "الصلح والإرشاد الأسري",
-        "/family-services#family-reconciliation"
+        "التصالح والإرشاد الأسري",
+        "/family-services/reconciliation-guidance"
       ),
-      pageLink("النسخ والمستندات", "/family-services#copies-documents"),
+      pageLink("شؤون المحضونين", "/family-services/custodial-affairs"),
     ],
   },
   {
@@ -669,13 +674,13 @@ const staticKnowledge: KnowledgeEntry[] = [
       "بدل فاقد وثيقة الزواج",
       "ابي نسخة من عقد الزواج",
     ],
-    text: "إذا كنت تقصد البطاقة الزوجية، يمكنك استخدام خدمة إصدار بدل فاقد أو تالف. أمّا إذا كنت تقصد نسخة رسمية من عقد الزواج، فراجع خدمات التوثيقات الأسرية أو تواصل مع الجهة المختصة لتأكيد الإجراء الصحيح.",
+    text: "إذا كنت تقصد البطاقة الزوجية، يمكنك استخدام خدمة إصدار بدل فاقد أو تالف. أمّا إذا كنت تقصد نسخة رسمية من عقد الزواج، فراجع الخدمات الرضائية أو تواصل مع الجهة المختصة لتأكيد الإجراء الصحيح.",
     gulfText:
-      "إذا تقصد البطاقة الزوجية، استخدم خدمة بدل فاقد أو تالف. وإذا تقصد نسخة رسمية من عقد الزواج، راجع خدمات التوثيقات الأسرية أو تأكد من الإجراء عن طريق الجهة المختصة.",
+      "إذا تقصد البطاقة الزوجية، استخدم خدمة بدل فاقد أو تالف. وإذا تقصد نسخة رسمية من عقد الزواج، راجع الخدمات الرضائية أو تأكد من الإجراء عن طريق الجهة المختصة.",
     links: [
       pageLink(
-        "عرض خدمات التوثيقات الأسرية",
-        "/family-services#family-documentation"
+        "عرض الخدمات الرضائية",
+        "/family-services/consensual"
       ),
       ...contactLinks,
     ],
@@ -839,7 +844,7 @@ const staticKnowledge: KnowledgeEntry[] = [
       "ابي اشوف المعاملات",
       "بوابة الخدمات",
     ],
-    text: "يعرض الموقع خدمات التقاضي، والتوثيقات الأسرية، والصلح والإرشاد الأسري، والنسخ والمستندات، مع روابط مباشرة إلى البوابات الرسمية.",
+    text: "يعرض الموقع خدمات التقاضي، والخدمات الرضائية، والتصالح والإرشاد الأسري، مع روابط مباشرة إلى البوابات الرسمية.",
     links: [
       pageLink("عرض خدمات المحكمة", "/family-services#services-view"),
       officialPortal,
@@ -1004,13 +1009,13 @@ const englishStaticKnowledge: KnowledgeEntry[] = [
     ],
     text: "Describe what you need to do in your own words—for example divorce, custody, maintenance, documentation, family reconciliation, or requesting a document copy. You can also browse the service categories below.",
     links: [
-      pageLink("Litigation services", "/family-services#litigation-services"),
-      pageLink("Family documentation", "/family-services#family-documentation"),
+      pageLink("Litigation services", "/family-services/litigation"),
+      pageLink("Consensual services", "/family-services/consensual"),
       pageLink(
-        "Reconciliation and guidance",
-        "/family-services#family-reconciliation"
+        "Family settlement and guidance",
+        "/family-services/reconciliation-guidance"
       ),
-      pageLink("Copies and documents", "/family-services#copies-documents"),
+      pageLink("Custodial affairs", "/family-services/custodial-affairs"),
     ],
   },
   {
@@ -1388,7 +1393,7 @@ const englishStaticKnowledge: KnowledgeEntry[] = [
       "available court services",
       "services portal",
     ],
-    text: "Services are grouped into litigation, family documentation, reconciliation and guidance, and copies and documents. Tell me what you need to do and I can narrow the options.",
+    text: "Services are grouped into litigation services, consensual services, and family settlement and guidance. Tell me what you need to do and I can narrow the options.",
     links: [
       pageLink("Browse Court services", "/family-services#services-view"),
       officialPortalEn,
@@ -1664,6 +1669,30 @@ const serviceExamples: Record<string, string[]> = {
     "تأكد من صحة الوثيقة",
     "فحص وثيقة قضائية",
   ],
+  "child-custody": [
+    "خدمة الحضانة",
+    "ابي اقدم على حضانة",
+    "حضانة الابناء",
+    "شؤون حضانة الطفل",
+  ],
+  "child-visitation": [
+    "زيارة الابناء",
+    "رؤية المحضون",
+    "مواعيد زيارة الطفل",
+    "ابي اشوف عيالي",
+  ],
+  "child-handover": [
+    "تسليم الابناء",
+    "تسليم المحضون",
+    "استلام الطفل",
+    "موعد تسليم العيال",
+  ],
+  "child-psychological-care": [
+    "الرعاية النفسية للابناء",
+    "دعم نفسي للطفل",
+    "مساعدة نفسية للعيال",
+    "رعاية نفسية للمحضون",
+  ],
 };
 
 const englishServiceExamples: Record<string, string[]> = {
@@ -1849,6 +1878,26 @@ const englishServiceExamples: Record<string, string[]> = {
     "verify court paper",
     "validate judicial document",
   ],
+  "child-custody": [
+    "child custody service",
+    "apply for custody",
+    "custody of my children",
+  ],
+  "child-visitation": [
+    "visit my children",
+    "child visitation arrangements",
+    "contact with my child",
+  ],
+  "child-handover": [
+    "handover my child",
+    "collect my children",
+    "child handover arrangements",
+  ],
+  "child-psychological-care": [
+    "psychological support for my child",
+    "mental health care for children",
+    "child counselling support",
+  ],
 };
 
 const groupExamples: Record<string, string[]> = {
@@ -1858,19 +1907,35 @@ const groupExamples: Record<string, string[]> = {
     "رفع ومتابعة القضايا",
     "الخدمات القضائية",
   ],
+  "case-request-registration": [
+    "تسجيل الدعاوى والطلبات",
+    "رفع الدعاوى والطلبات",
+    "قيد الدعاوى والطلبات",
+  ],
   "family-documentation": [
+    "الخدمات الرضائية",
     "خدمات التوثيقات الاسرية",
     "وثائق الزواج والطلاق",
     "الشهادات الاسرية",
     "خدمات التوثيق",
   ],
   "family-reconciliation": [
+    "التصالح والارشاد الاسري",
     "الصلح والارشاد الاسري",
+    "الوساطه الاسريه",
     "خدمات التصالح",
     "حل الخلافات الاسرية",
     "الدعم الاسري",
   ],
+  "custodial-affairs": [
+    "شؤون المحضونين",
+    "خدمات المحضونين",
+    "الحضانة والزيارة",
+    "تسليم الابناء",
+    "رعاية الابناء",
+  ],
   "copies-documents": [
+    "نسخ الوثائق القضائية",
     "النسخ والمستندات",
     "نسخ الاحكام والمحاضر",
     "صور مستندات القضية",
@@ -1904,10 +1969,29 @@ const serviceKnowledge: KnowledgeEntry[] = courtServiceGroups.flatMap(group => {
       ...(groupExamples[group.id] ?? []),
     ],
     text: group.description,
-    links: [pageLink(`عرض ${group.title}`, `/family-services#${group.id}`)],
+    links: [pageLink(`عرض ${group.title}`, courtServiceGroupPaths[group.id])],
   };
 
-  const entries = group.services.flatMap(service => {
+  const sectionEntries: KnowledgeEntry[] = (group.sections ?? []).map(
+    section => ({
+      id: `group-${section.id}`,
+      title: section.title,
+      examples: [
+        section.title,
+        section.description,
+        ...(groupExamples[section.id] ?? []),
+      ],
+      text: section.description,
+      links: [
+        pageLink(`عرض ${section.title}`, courtServiceSectionPaths[section.id]),
+      ],
+    })
+  );
+  const groupServices =
+    group.services ??
+    group.sections?.flatMap(section => section.services) ??
+    [];
+  const entries = groupServices.flatMap(service => {
     if (seenServices.has(service.id)) return [];
     seenServices.add(service.id);
     const replyOverride = serviceReplyOverrides[service.id];
@@ -1936,7 +2020,7 @@ const serviceKnowledge: KnowledgeEntry[] = courtServiceGroups.flatMap(group => {
     ];
   });
 
-  return [groupEntry, ...entries];
+  return [groupEntry, ...sectionEntries, ...entries];
 });
 
 const seenEnglishServices = new Set<string>();
@@ -1954,11 +2038,37 @@ const englishServiceKnowledge: KnowledgeEntry[] = courtServiceGroups.flatMap(
       ],
       text: groupCopy.description,
       links: [
-        pageLink(`View ${groupCopy.title}`, `/family-services#${group.id}`),
+        pageLink(`View ${groupCopy.title}`, courtServiceGroupPaths[group.id]),
       ],
     };
 
-    const entries = group.services.flatMap(service => {
+    const sectionEntries: KnowledgeEntry[] = (group.sections ?? []).map(
+      section => {
+        const sectionCopy = familyServiceEnglishCopy[section.id];
+        return {
+          id: `group-${section.id}`,
+          title: sectionCopy.title,
+          examples: [
+            sectionCopy.title,
+            sectionCopy.description,
+            `show me ${sectionCopy.title}`,
+            `I need ${sectionCopy.title}`,
+          ],
+          text: sectionCopy.description,
+          links: [
+            pageLink(
+              `View ${sectionCopy.title}`,
+              courtServiceSectionPaths[section.id]
+            ),
+          ],
+        } satisfies KnowledgeEntry;
+      }
+    );
+    const groupServices =
+      group.services ??
+      group.sections?.flatMap(section => section.services) ??
+      [];
+    const entries = groupServices.flatMap(service => {
       if (seenEnglishServices.has(service.id)) return [];
       seenEnglishServices.add(service.id);
       const serviceCopy = familyServiceEnglishCopy[service.id];
@@ -1980,7 +2090,7 @@ const englishServiceKnowledge: KnowledgeEntry[] = courtServiceGroups.flatMap(
       ];
     });
 
-    return [groupEntry, ...entries];
+    return [groupEntry, ...sectionEntries, ...entries];
   }
 );
 
@@ -2760,6 +2870,30 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
   return bonuses;
 }
 
+function isEntryEligibleForQuestion(
+  entry: KnowledgeEntry,
+  normalizedQuestion: string,
+  language: GuideLanguage
+) {
+  if (entry.id !== "service-child-visitation") return true;
+
+  if (language === "en") {
+    return (
+      normalizedQuestion === "child visitation" ||
+      /\b(visit|visitation|contact)\b.{0,24}\b(child|children|son|daughter|kid|kids)\b|\b(child|children|son|daughter|kid|kids)\b.{0,24}\b(visit|visitation|contact)\b/.test(
+        normalizedQuestion
+      )
+    );
+  }
+
+  return (
+    normalizedQuestion === "الزياره" ||
+    /(زيار|رؤي).{0,20}(ابن|بنت|طفل|محضون|عيال|ولد)|(ابن|بنت|طفل|محضون|عيال|ولد).{0,20}(زيار|رؤي)/.test(
+      normalizedQuestion
+    )
+  );
+}
+
 export function retrieveGuideAnswer(
   question: string,
   requestedLanguage: GuideLanguage = "ar",
@@ -2811,7 +2945,11 @@ export function retrieveGuideAnswer(
       scores.set(entry.id, { entry, score });
   });
 
-  const ranked = Array.from(scores.values()).sort((a, b) => b.score - a.score);
+  const ranked = Array.from(scores.values())
+    .filter(({ entry }) =>
+      isEntryEligibleForQuestion(entry, normalizedQuestion, language)
+    )
+    .sort((a, b) => b.score - a.score);
   const best = ranked[0];
   if (!best || best.score < 0.11) return null;
   const runnerUpScore = ranked[1]?.score ?? 0;

@@ -113,6 +113,11 @@ export const familyServiceEnglishCopy: Record<
   "litigation-services": {
     title: "Litigation services",
     description:
+      "Case and request registration services and access to copies of judicial documents.",
+  },
+  "case-request-registration": {
+    title: "Case and request registration",
+    description:
       "File cases and follow judicial requests, appointments and procedures online.",
   },
   "file-new-case": {
@@ -133,19 +138,19 @@ export const familyServiceEnglishCopy: Record<
     description: "Submit requests and documents connected to a case online.",
   },
   "family-documentation": {
-    title: "Family documentation services",
+    title: "Consensual services",
     description:
-      "Marriage, divorce, estate, certificate and family agency procedures.",
+      "Divorce, khul’, certificates, marriage and divorce documents, support, estates and marriage officer services.",
   },
   "family-reconciliation": {
-    title: "Family reconciliation and guidance",
+    title: "Family settlement and guidance",
     description:
-      "Reconciliation, guidance and support services for family disputes.",
+      "Mediation, settlement, guidance and support services for family disputes.",
   },
   "family-reconciliation-request": {
-    title: "Family reconciliation request",
+    title: "Family mediation",
     description:
-      "Begin family reconciliation through the official judicial channels.",
+      "Begin family mediation and settlement through the official judicial channels.",
   },
   "reconciliation-follow-up": {
     title: "Track a reconciliation file",
@@ -156,8 +161,30 @@ export const familyServiceEnglishCopy: Record<
     title: "Family guidance and support",
     description: "Access available family guidance and support services.",
   },
+  "custodial-affairs": {
+    title: "Custodial affairs",
+    description:
+      "Custody, child visitation, child handover and psychological care services for children.",
+  },
+  "child-custody": {
+    title: "Child custody",
+    description: "Access procedures and services related to child custody.",
+  },
+  "child-visitation": {
+    title: "Child visitation",
+    description: "Access procedures and services for child visitation.",
+  },
+  "child-handover": {
+    title: "Child handover",
+    description: "Access procedures and services related to child handover.",
+  },
+  "child-psychological-care": {
+    title: "Psychological care for children",
+    description:
+      "Access psychological care and support services for children.",
+  },
   "copies-documents": {
-    title: "Copies and documents",
+    title: "Copies of judicial documents",
     description:
       "Official copies, hearing records and related judicial documents.",
   },

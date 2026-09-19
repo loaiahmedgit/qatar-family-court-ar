@@ -8,9 +8,11 @@ import {
   Printer,
   X,
 } from "lucide-react";
+import { useReducedMotion } from "motion/react";
 
 import familyCourtLogo from "../assets/brand/family-court-logo.png";
 import { useLanguage } from "../contexts/LanguageContext";
+import { newsItems } from "../data/newsItems";
 import { sitePath } from "../lib/sitePath";
 import { FamilyCourtNavigation } from "./FamilyCourtNavigation";
 
@@ -29,9 +31,13 @@ export function SiteHeader({
   mobileLinks,
 }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeNewsIndex, setActiveNewsIndex] = useState(0);
+  const [newsPaused, setNewsPaused] = useState(false);
   const languageSelectorRef = useRef<HTMLDetailsElement>(null);
+  const reducedMotion = useReducedMotion();
   const { language, setLanguage } = useLanguage();
   const isEnglish = language === "en";
+  const activeNews = newsItems[activeNewsIndex];
 
   useEffect(() => {
     const closeLanguageMenu = (event: PointerEvent) => {
@@ -44,6 +50,16 @@ export function SiteHeader({
     return () => document.removeEventListener("pointerdown", closeLanguageMenu);
   }, []);
 
+  useEffect(() => {
+    if (newsPaused || reducedMotion || newsItems.length < 2) return;
+
+    const interval = window.setInterval(() => {
+      setActiveNewsIndex(index => (index + 1) % newsItems.length);
+    }, 4000);
+
+    return () => window.clearInterval(interval);
+  }, [newsPaused, reducedMotion]);
+
   const chooseLanguage = (
     nextLanguage: "ar" | "en",
     target: HTMLButtonElement
@@ -54,25 +70,39 @@ export function SiteHeader({
 
   return (
     <header className="site-header">
-      <div className="header-announcement">
+      <div
+        className="header-announcement"
+        aria-label={isEnglish ? "Latest news" : "آخر الأخبار"}
+        onMouseEnter={() => setNewsPaused(true)}
+        onMouseLeave={() => setNewsPaused(false)}
+        onFocusCapture={() => setNewsPaused(true)}
+        onBlurCapture={() => setNewsPaused(false)}
+      >
         <div className="header-announcement-inner">
           <span className="header-news-pill">
             {isEnglish ? "News" : "أخبار"}
           </span>
-          <strong>
-            {isEnglish
-              ? "New electronic documentation service launched"
-              : "إطلاق خدمة التوثيق الإلكتروني الجديدة"}
-          </strong>
-          <span className="header-announcement-separator" aria-hidden="true" />
-          <span className="header-announcement-copy">
-            {isEnglish
-              ? "A faster, simpler judicial journey"
-              : "خدمة أسرع وأسهل لرحلتك القضائية"}
-          </span>
+          <a
+            key={`${language}-${activeNews.id}`}
+            className="header-announcement-story"
+            href={activeNews.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <strong>{activeNews.title[language]}</strong>
+            <span
+              className="header-announcement-separator"
+              aria-hidden="true"
+            />
+            <span className="header-announcement-copy">
+              {activeNews.summary[language]}
+            </span>
+          </a>
           <a
             className="header-announcement-link"
-            href={sitePath("/family-services#services-view")}
+            href={activeNews.href}
+            target="_blank"
+            rel="noreferrer"
           >
             <span>{isEnglish ? "View details" : "اطلع على التفاصيل"}</span>
             {isEnglish ? (

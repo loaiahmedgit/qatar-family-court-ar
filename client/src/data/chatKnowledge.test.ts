@@ -70,7 +70,8 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
       "استعراض خدمات المحكمة",
       "فتح دليل المتطلبات",
       "الموقع وبيانات التواصل",
-      "الصلح والإرشاد الأسري",
+      "التصالح والإرشاد الأسري",
+      "شؤون المحضونين",
     ]);
   });
 
@@ -79,9 +80,9 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
     expect(result?.answer.id).toBe("service-discovery");
     expect(result?.answer.links?.map(({ label }) => label)).toEqual([
       "خدمات التقاضي",
-      "خدمات التوثيقات الأسرية",
-      "الصلح والإرشاد الأسري",
-      "النسخ والمستندات",
+      "الخدمات الرضائية",
+      "التصالح والإرشاد الأسري",
+      "شؤون المحضونين",
     ]);
   });
 
@@ -120,7 +121,12 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
   const uniqueServices = Array.from(
     new Map(
       courtServiceGroups
-        .flatMap(group => group.services)
+        .flatMap(
+          group =>
+            group.services ??
+            group.sections?.flatMap(section => section.services) ??
+            []
+        )
         .map(service => [service.id, service])
     ).values()
   );
@@ -140,6 +146,17 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
       expect(match(question)?.answer.id).toBe(expectedId);
     }
   );
+
+  it.each(
+    courtServiceGroups.flatMap(group =>
+      (group.sections ?? []).map(section => [
+        section.title,
+        `group-${section.id}`,
+      ])
+    )
+  )("indexes every displayed service section: %s", (question, expectedId) => {
+    expect(match(question)?.answer.id).toBe(expectedId);
+  });
 
   it.each([
     ["What is the court strategy?", "strategy"],

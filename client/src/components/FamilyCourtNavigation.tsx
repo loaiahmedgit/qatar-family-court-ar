@@ -6,22 +6,22 @@ const serviceLinks = [
   {
     ar: "خدمات التقاضي",
     en: "Litigation services",
-    href: "/family-services#litigation-services",
+    href: "/family-services/litigation",
   },
   {
-    ar: "التوثيقات الأسرية",
-    en: "Family documentation",
-    href: "/family-services#family-documentation",
+    ar: "الخدمات الرضائية",
+    en: "Consensual services",
+    href: "/family-services/consensual",
   },
   {
-    ar: "الصلح والإرشاد",
-    en: "Reconciliation and guidance",
-    href: "/family-services#family-reconciliation",
+    ar: "التصالح والإرشاد الأسري",
+    en: "Family settlement and guidance",
+    href: "/family-services/reconciliation-guidance",
   },
   {
-    ar: "النسخ والمستندات",
-    en: "Copies and documents",
-    href: "/family-services#copies-documents",
+    ar: "شؤون المحضونين",
+    en: "Custodial affairs",
+    href: "/family-services/custodial-affairs",
   },
 ] as const;
 

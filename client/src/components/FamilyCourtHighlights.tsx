@@ -1,44 +1,57 @@
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { sitePath } from "../lib/sitePath";
 
 const highlights = [
   {
-    title: { ar: "خدمات التقاضي", en: "Litigation services" },
-    description: {
-      ar: "رفع الدعاوى، متابعة الطلبات والمواعيد والإجراءات القضائية.",
-      en: "File cases and follow requests, hearings and judicial procedures.",
+    title: {
+      ar: "خدمات التقاضي",
+      en: "Litigation services",
     },
-    href: "/family-services#litigation-services",
+    description: {
+      ar: "تسجيل الدعاوى والطلبات والحصول على نسخ الوثائق القضائية.",
+      en: "Register cases and requests and obtain copies of judicial documents.",
+    },
+    href: "/family-services/litigation",
     iconSrc: "/images/highlights/litigation-gavel.png",
+    icon: null,
   },
   {
-    title: { ar: "خدمات التوثيقات الأسرية", en: "Family documentation" },
+    title: { ar: "الخدمات الرضائية", en: "Consensual services" },
     description: {
-      ar: "إجراءات ووثائق التوثيق الأسري والخدمات المرتبطة بها.",
-      en: "Family documentation procedures, records and related services.",
+      ar: "خدمات الطلاق والخلع والشهادات والوثائق والتركات والمأذونين.",
+      en: "Divorce, certificates, documents, estates and marriage officer services.",
     },
-    href: "/family-services#family-documentation",
+    href: "/family-services/consensual",
     iconSrc: "/images/highlights/family-documentation.png",
+    icon: null,
   },
   {
-    title: { ar: "الصلح والإرشاد الأسري", en: "Family reconciliation" },
-    description: {
-      ar: "خدمات الصلح الأسري والإرشاد والدعم الأسري.",
-      en: "Reconciliation, guidance and family support services.",
+    title: {
+      ar: "التصالح والإرشاد الأسري",
+      en: "Family settlement and guidance",
     },
-    href: "/family-services#family-reconciliation",
+    description: {
+      ar: "خدمات الوساطة والتصالح والإرشاد والدعم الأسري.",
+      en: "Family mediation, settlement, guidance and support services.",
+    },
+    href: "/family-services/reconciliation-guidance",
     iconSrc: "/images/highlights/family-reconciliation.png",
+    icon: null,
   },
   {
-    title: { ar: "النسخ والمستندات", en: "Copies and documents" },
+    title: { ar: "شؤون المحضونين", en: "Custodial affairs" },
     description: {
-      ar: "طلبات النسخ الرسمية والمستندات القضائية ذات الصلة.",
-      en: "Requests for official copies and related judicial documents.",
+      ar: "خدمات الحضانة والزيارة وتسليم الأبناء والرعاية النفسية للأبناء.",
+      en: "Custody, visitation, child handover and psychological care services.",
     },
-    href: "/family-services#copies-documents",
-    iconSrc: "/images/highlights/copies-documents.png",
+    href: "/family-services/custodial-affairs",
+    iconSrc: "/images/highlights/custodial-affairs.png",
+    icon: null,
   },
 ] as const;
 
@@ -51,25 +64,39 @@ export function FamilyCourtHighlights() {
       className="family-court-highlights"
       aria-labelledby="family-court-highlights-title"
     >
-      <h2 id="family-court-highlights-title" className="sr-only">
-        {isEnglish ? "Family Court services" : "خدمات محكمة الأسرة"}
-      </h2>
+      <header className="family-court-highlights-heading">
+        <h2
+          id="family-court-highlights-title"
+          className="section-shell"
+        >
+          {isEnglish ? "Family Court services" : "خدمات المحكمة"}
+        </h2>
+      </header>
       <div className="family-court-highlights-grid section-shell">
-        {highlights.map(({ title, description, href, iconSrc }) => (
+        {highlights.map(({ title, description, href, iconSrc, icon }) => (
           <a
             className="family-court-highlight"
             href={sitePath(href)}
             key={href}
           >
             <span className="family-court-highlight-icon">
-              <img
-                src={sitePath(iconSrc)}
-                alt=""
-                aria-hidden="true"
-                width={1254}
-                height={1254}
-                loading="lazy"
-              />
+              {iconSrc ? (
+                <img
+                  src={sitePath(iconSrc)}
+                  alt=""
+                  aria-hidden="true"
+                  width={1254}
+                  height={1254}
+                  loading="lazy"
+                />
+              ) : icon ? (
+                <HugeiconsIcon
+                  icon={icon}
+                  size={64}
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+              ) : null}
             </span>
             <h3>{title[language]}</h3>
             <p>{description[language]}</p>

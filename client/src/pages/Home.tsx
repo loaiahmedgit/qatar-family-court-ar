@@ -18,7 +18,6 @@ import {
   ArrowUp,
   ArrowUpLeft,
   ArrowUpRight,
-  Check,
   ChevronDown,
   FileText,
   Printer,
@@ -47,14 +46,15 @@ const homeCopy = {
       <>
         محكمة الأسرة
         <br />
-        <em>في دولة قطر</em>
+        {" "}
+        <em>دولة قطر</em>
       </>
     ),
-    heroText:
-      "صفحة تعريفية تسلط الضوء على محكمة الأسرة واختصاصاتها ضمن المنظومة القضائية، وتوفر روابط مباشرة إلى المصادر والخدمات الرسمية.",
-    heroPrimary: "تعرّف على محكمة الأسرة",
+    heroVerse:
+      "﴿وَلَا تَنْسَوُا الْفَضْلَ بَيْنَكُمْ إِنَّ اللَّهَ بِمَا تَعْمَلُونَ بَصِيرٌ﴾",
+    heroVerseCitation: "سورة البقرة، الآية 237",
+    heroPrimary: "خدمات المحكمة",
     share: "مشاركة الصفحة",
-    reassurance: "نبذة تعريفية وروابط مباشرة إلى المصادر الرسمية.",
     caption: "مبنى محكمة الأسرة · دولة قطر",
     aboutEyebrow: "عن المحكمة",
     aboutTitle: (
@@ -67,7 +67,7 @@ const homeCopy = {
     aboutText:
       "تختص محكمة الأسرة بالفصل في الدعاوى والمنازعات المتعلقة بمسائل الأسرة والتركات، من خلال دوائر قضائية متخصصة تعمل على تنظيم الإجراءات وتيسير وصول المتقاضين إلى الخدمات والمعلومات المرتبطة بقضايا الأسرة.",
     aboutAction: "تعرّف على اختصاصات المحكمة",
-    courtServices: "خدمات المحكمة",
+    beforeProcedure: "قبل بدء الإجراء",
     requirementsTitle: ["دليل", "المتطلبات"],
     requirementsLead: "جهّز مستنداتك قبل تقديم الطلب",
     requirementsLabel: "فئات دليل المتطلبات",
@@ -138,11 +138,11 @@ const homeCopy = {
         <em>in the State of Qatar</em>
       </>
     ),
-    heroText:
-      "An introductory guide to the Family Court, its place within Qatar’s judicial system, and direct access to official sources and services.",
-    heroPrimary: "Explore the Family Court",
+    heroVerse:
+      "“Do not forget graciousness between you. Surely Allah is All-Seeing of what you do.”",
+    heroVerseCitation: "Quran 2:237",
+    heroPrimary: "Explore Court services",
     share: "Share page",
-    reassurance: "Clear guidance with direct links to official sources.",
     caption: "Family Court building · State of Qatar",
     aboutEyebrow: "About the Court",
     aboutTitle: (
@@ -155,7 +155,7 @@ const homeCopy = {
     aboutText:
       "The Family Court hears cases and disputes concerning family and inheritance matters through specialised judicial circuits that organise procedures and make related Court services and information easier to access.",
     aboutAction: "Explore the Court's jurisdiction",
-    courtServices: "Court services",
+    beforeProcedure: "Before you begin",
     requirementsTitle: ["Requirements", "guide"],
     requirementsLead: "Prepare your documents before submitting a request",
     requirementsLabel: "Requirements guide categories",
@@ -235,13 +235,13 @@ export default function Home() {
   useEffect(() => {
     document.title = isEnglish
       ? "Qatar Family Court"
-      : "محكمة الأسرة في دولة قطر";
+      : "محكمة الأسرة دولة قطر";
   }, [isEnglish]);
 
   const sharePage = async () => {
     const shareData = {
       title: isEnglish ? "Family Court" : "محكمة الأسرة",
-      text: copy.heroText,
+      text: copy.heroVerse,
       url: window.location.href,
     };
     try {
@@ -304,9 +304,12 @@ export default function Home() {
             <div className="hero-copy">
               <p className="hero-kicker">{copy.heroKicker}</p>
               <h1 id="hero-title">{copy.heroTitle}</h1>
-              <p>{copy.heroText}</p>
+              <blockquote className="hero-verse">
+                <p>{copy.heroVerse}</p>
+                <cite>{copy.heroVerseCitation}</cite>
+              </blockquote>
               <div className="hero-buttons">
-                <a className="primary-button" href="#about">
+                <a className="primary-button" href="#services">
                   {copy.heroPrimary}{" "}
                   {isEnglish ? (
                     <ArrowRight size={19} aria-hidden="true" />
@@ -318,14 +321,12 @@ export default function Home() {
                   <Share2 size={17} /> {copy.share}
                 </button>
               </div>
-              <div className="hero-reassurance">
-                <Check size={17} />
-                <span>{copy.reassurance}</span>
-              </div>
             </div>
           </div>
           <div className="hero-caption">{copy.caption}</div>
         </section>
+
+        <FamilyCourtHighlights />
 
         <section
           id="about"
@@ -353,15 +354,9 @@ export default function Home() {
           </div>
         </section>
 
-        <div
-          id="journey"
-          className="route-threshold route-to-journey"
-          aria-hidden="true"
-        >
-          <span>{copy.courtServices}</span>
+        <div className="route-threshold route-to-journey" aria-hidden="true">
+          <span>{copy.beforeProcedure}</span>
         </div>
-
-        <FamilyCourtHighlights />
 
         <section
           id="requirements"

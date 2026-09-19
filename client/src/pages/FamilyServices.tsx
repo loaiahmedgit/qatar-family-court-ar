@@ -5,6 +5,7 @@ import {
   ArrowLeft02Icon,
   ArrowUp02Icon,
   Call02Icon,
+  ChildIcon,
   CopyrightIcon,
   Mail02Icon,
   Tick02Icon,
@@ -14,7 +15,11 @@ import { ArrowRight } from "lucide-react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteRating } from "../components/SiteRating";
 import { useLanguage } from "../contexts/LanguageContext";
-import { courtServiceGroups } from "../data/familyServices";
+import {
+  courtServiceGroupPaths,
+  courtServiceGroups,
+  courtServiceSectionPaths,
+} from "../data/familyServices";
 import { familyServiceEnglishCopy } from "../data/familyServicesEnglish";
 import { familyRequirements } from "../data/familyRequirements";
 import { sitePath } from "../lib/sitePath";
@@ -34,12 +39,15 @@ const mobileLinks = [
   },
 ] as const;
 
-const serviceGroupIconImages: Record<string, string> = {
+const serviceGroupIconImages: Partial<Record<string, string>> = {
   "litigation-services": "/images/highlights/litigation-gavel.png",
   "family-documentation": "/images/highlights/family-documentation.png",
   "family-reconciliation": "/images/highlights/family-reconciliation.png",
-  "copies-documents": "/images/highlights/copies-documents.png",
 };
+
+const serviceSectionIds = courtServiceGroups.flatMap(group =>
+  (group.sections ?? []).map(section => section.id)
+);
 
 type AboutView =
   | "overview"
@@ -97,7 +105,8 @@ const aboutAnchorByView: Record<AboutView, string> = {
 const viewFromHash = (hash: string): GuideView => {
   if (
     hash === "services-view" ||
-    courtServiceGroups.some(({ id }) => id === hash)
+    courtServiceGroups.some(({ id }) => id === hash) ||
+    serviceSectionIds.includes(hash)
   )
     return "services";
   if (
@@ -425,6 +434,12 @@ export default function FamilyServices() {
   const anchorScrollFrame = useRef(0);
   const anchorScrollTimer = useRef(0);
 
+  useEffect(() => {
+    const legacyServicePath =
+      courtServiceGroupPaths[hash] ?? courtServiceSectionPaths[hash];
+    if (legacyServicePath) window.location.replace(sitePath(legacyServicePath));
+  }, [hash]);
+
   const scrollToAnchor = (
     targetId: string,
     afterRequirementTransition = false
@@ -513,8 +528,14 @@ export default function FamilyServices() {
   };
 
   const toggleIndexBranch = (view: BranchView) => {
-    const targetId =
-      view === "services" ? "services-view" : "requirements-guide";
+    if (view === "services") {
+      setOpenIndexBranch(current =>
+        current === "services" ? null : "services"
+      );
+      return;
+    }
+
+    const targetId = "requirements-guide";
     setActiveView(view);
     setActiveAnchor(targetId);
     setOpenIndexBranch(current => (current === view ? null : view));
@@ -626,18 +647,8 @@ export default function FamilyServices() {
                 <div id="services-index-branch" className="quf-index-branch">
                   {courtServiceGroups.map(group => (
                     <a
-                      className={
-                        activeAnchor === group.id ? "active" : undefined
-                      }
-                      aria-current={
-                        activeAnchor === group.id ? "location" : undefined
-                      }
                       key={group.id}
-                      href={`#${group.id}`}
-                      onClick={event => {
-                        event.preventDefault();
-                        selectView("services", group.id);
-                      }}
+                      href={sitePath(courtServiceGroupPaths[group.id])}
                     >
                       {isEnglish
                         ? familyServiceEnglishCopy[group.id].title
@@ -1117,73 +1128,56 @@ export default function FamilyServices() {
             <section
               id="services-view"
               className="quf-section quf-services-view"
-              aria-labelledby="quf-services-heading"
+              aria-label={copy.services}
             >
-              <header>
-                <h2 id="quf-services-heading">{copy.servicesTitle}</h2>
-                <p>{copy.servicesIntro}</p>
-              </header>
-              <div className="quf-service-groups">
+              <div className="quf-category-directory">
                 {courtServiceGroups.map(group => {
                   const groupIconImage = sitePath(
-                    serviceGroupIconImages[group.id]
+                    serviceGroupIconImages[group.id] ?? ""
                   );
                   const groupCopy = isEnglish
                     ? familyServiceEnglishCopy[group.id]
                     : group;
                   return (
-                    <section
+                    <a
                       id={group.id}
                       key={group.id}
-                      className="quf-service-group"
+                      className="quf-category-entry"
+                      href={sitePath(courtServiceGroupPaths[group.id])}
                     >
-                      <h3 className="quf-service-group-heading">
+                      {serviceGroupIconImages[group.id] ? (
                         <span
-                          className="quf-service-group-icon"
+                          className="quf-category-entry-icon"
                           aria-hidden="true"
                           style={{
                             WebkitMaskImage: `url("${groupIconImage}")`,
                             maskImage: `url("${groupIconImage}")`,
                           }}
                         />
-                        <span>{groupCopy.title}</span>
-                      </h3>
-                      <div className="quf-service-list">
-                        {group.services.map(service => {
-                          const serviceCopy = isEnglish
-                            ? familyServiceEnglishCopy[service.id]
-                            : service;
-                          return (
-                            <a
-                              className="quf-service-row"
-                              key={service.id}
-                              href={service.href}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <span className="quf-service-identity">
-                                <strong>{serviceCopy.title}</strong>
-                              </span>
-                              <p>{serviceCopy.description}</p>
-                              {isEnglish ? (
-                                <ArrowRight
-                                  size={18}
-                                  strokeWidth={1.8}
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <HugeiconsIcon
-                                  icon={ArrowLeft02Icon}
-                                  size={18}
-                                  strokeWidth={1.8}
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </a>
-                          );
-                        })}
+                      ) : (
+                        <HugeiconsIcon
+                          className="quf-category-entry-library-icon"
+                          icon={ChildIcon}
+                          size={48}
+                          strokeWidth={1.7}
+                          aria-hidden="true"
+                        />
+                      )}
+                      <div>
+                        <h3>{groupCopy.title}</h3>
+                        <p>{groupCopy.description}</p>
                       </div>
-                    </section>
+                      {isEnglish ? (
+                        <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
+                      ) : (
+                        <HugeiconsIcon
+                          icon={ArrowLeft02Icon}
+                          size={20}
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </a>
                   );
                 })}
               </div>

@@ -6,6 +6,7 @@ import { ChatGuide } from "./components/ChatGuide";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import FamilyServices from "./pages/FamilyServices";
+import ServiceCategory from "./pages/ServiceCategory";
 
 const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -14,6 +15,18 @@ function Router() {
     <WouterRouter base={routerBase || undefined}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/family-services/litigation">
+          <ServiceCategory groupId="litigation-services" />
+        </Route>
+        <Route path="/family-services/consensual">
+          <ServiceCategory groupId="family-documentation" />
+        </Route>
+        <Route path="/family-services/reconciliation-guidance">
+          <ServiceCategory groupId="family-reconciliation" />
+        </Route>
+        <Route path="/family-services/custodial-affairs">
+          <ServiceCategory groupId="custodial-affairs" />
+        </Route>
         <Route path="/family-services" component={FamilyServices} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

@@ -36,7 +36,28 @@ export type FamilyServiceGroup = {
   id: string;
   title: string;
   description: string;
+  services?: FamilyService[];
+  sections?: FamilyServiceSection[];
+};
+
+export type FamilyServiceSection = {
+  id: string;
+  title: string;
+  description: string;
   services: FamilyService[];
+};
+
+export const courtServiceGroupPaths: Record<string, string> = {
+  "litigation-services": "/family-services/litigation",
+  "family-documentation": "/family-services/consensual",
+  "family-reconciliation": "/family-services/reconciliation-guidance",
+  "custodial-affairs": "/family-services/custodial-affairs",
+};
+
+export const courtServiceSectionPaths: Record<string, string> = {
+  "case-request-registration":
+    "/family-services/litigation#case-request-registration",
+  "copies-documents": "/family-services/litigation#copies-documents",
 };
 
 export const familyServiceGroups: FamilyServiceGroup[] = [
@@ -233,7 +254,9 @@ const featuredServiceIds = [
   "marriage-appointment",
 ] as const;
 
-const allFamilyServices = familyServiceGroups.flatMap(group => group.services);
+const allFamilyServices = familyServiceGroups.flatMap(
+  group => group.services ?? []
+);
 
 const electronicCourtPortal = "https://eservices.sjc.gov.qa/";
 const litigantRequestsForm = "https://forms.cloud.microsoft/r/MgGrV4DwmR";
@@ -245,56 +268,104 @@ export const courtServiceGroups: FamilyServiceGroup[] = [
     id: "litigation-services",
     title: "خدمات التقاضي",
     description:
-      "خدمات رفع الدعاوى ومتابعة الطلبات والمواعيد والإجراءات القضائية إلكترونياً.",
-    services: [
+      "خدمات تسجيل الدعاوى والطلبات والحصول على نسخ الوثائق القضائية.",
+    sections: [
       {
-        id: "file-new-case",
-        title: "قيد دعوى جديدة",
+        id: "case-request-registration",
+        title: "تسجيل الدعاوى والطلبات",
         description:
-          "الانتقال إلى بوابة الخدمات الإلكترونية لبدء إجراءات قيد الدعوى",
-        href: electronicCourtPortal,
-        icon: LegalDocument01Icon,
+          "رفع الدعاوى ومتابعة الطلبات والمواعيد والإجراءات القضائية إلكترونياً.",
+        services: [
+          {
+            id: "file-new-case",
+            title: "قيد دعوى جديدة",
+            description:
+              "الانتقال إلى بوابة الخدمات الإلكترونية لبدء إجراءات قيد الدعوى",
+            href: electronicCourtPortal,
+            icon: LegalDocument01Icon,
+          },
+          {
+            id: "follow-cases",
+            title: "متابعة الدعاوى والطلبات",
+            description:
+              "متابعة حالة الدعاوى والطلبات القضائية المقدمة إلكترونياً",
+            href: electronicCourtPortal,
+            icon: CourtHouseIcon,
+          },
+          {
+            id: "hearing-appointments",
+            title: "مواعيد الجلسات",
+            description: "الوصول إلى مواعيد الجلسات والخدمات المرتبطة بها",
+            href: electronicCourtPortal,
+            icon: CalendarHeartIcon,
+          },
+          {
+            id: "court-requests",
+            title: "الطلبات القضائية",
+            description: "تقديم الطلبات والمستندات المرتبطة بالدعوى إلكترونياً",
+            href: electronicCourtPortal,
+            icon: FileValidationIcon,
+          },
+        ],
       },
       {
-        id: "follow-cases",
-        title: "متابعة الدعاوى والطلبات",
-        description: "متابعة حالة الدعاوى والطلبات القضائية المقدمة إلكترونياً",
-        href: electronicCourtPortal,
-        icon: CourtHouseIcon,
-      },
-      {
-        id: "hearing-appointments",
-        title: "مواعيد الجلسات",
-        description: "الوصول إلى مواعيد الجلسات والخدمات المرتبطة بها",
-        href: electronicCourtPortal,
-        icon: CalendarHeartIcon,
-      },
-      {
-        id: "court-requests",
-        title: "الطلبات القضائية",
-        description: "تقديم الطلبات والمستندات المرتبطة بالدعوى إلكترونياً",
-        href: electronicCourtPortal,
-        icon: FileValidationIcon,
+        id: "copies-documents",
+        title: "نسخ الوثائق القضائية",
+        description:
+          "طلبات النسخ الرسمية ومحاضر الجلسات والمستندات القضائية ذات الصلة.",
+        services: [
+          {
+            id: "judgment-copy",
+            title: "طلب نسخة حكم",
+            description:
+              "طلب نسخة رسمية من الحكم عبر بوابة الخدمات الإلكترونية",
+            href: litigantRequestsForm,
+            icon: LegalDocument02Icon,
+          },
+          {
+            id: "hearing-record-copy",
+            title: "طلب نسخة محضر جلسة",
+            description: "تقديم طلب للحصول على نسخة من محضر الجلسة",
+            href: litigantRequestsForm,
+            icon: DocumentValidationIcon,
+          },
+          {
+            id: "document-copy",
+            title: "طلب صورة مستند",
+            description:
+              "طلب صورة من المستندات القضائية المتاحة في ملف الدعوى",
+            href: litigantRequestsForm,
+            icon: FileValidationIcon,
+          },
+          {
+            id: "document-verification",
+            title: "التحقق من الوثائق",
+            description: "الوصول إلى خدمة التحقق من صحة الوثائق القضائية",
+            href: electronicCourtPortal,
+            icon: LicenseIcon,
+          },
+        ],
       },
     ],
   },
   {
     id: "family-documentation",
-    title: "خدمات التوثيقات الأسرية",
+    title: "الخدمات الرضائية",
     description:
-      "إجراءات ووثائق الزواج والطلاق والتركات والشهادات والوكالات الأسرية.",
+      "خدمات الطلاق والخلع والشهادات ووثائق الزواج والطلاق والإعالات والتركات والمأذونين.",
     services: allFamilyServices,
   },
   {
     id: "family-reconciliation",
-    title: "الصلح والإرشاد الأسري",
+    title: "التصالح والإرشاد الأسري",
     description:
-      "خدمات التصالح والإرشاد والدعم للمساعدة في معالجة الخلافات الأسرية.",
+      "خدمات الوساطة والتصالح والإرشاد والدعم للمساعدة في معالجة الخلافات الأسرية.",
     services: [
       {
         id: "family-reconciliation-request",
-        title: "طلب التصالح الأسري",
-        description: "بدء إجراءات التصالح الأسري عبر القنوات القضائية الرسمية",
+        title: "الوساطة الأسرية",
+        description:
+          "بدء إجراءات الوساطة والتصالح الأسري عبر القنوات القضائية الرسمية",
         href: maritalConsultationsForm,
         icon: Agreement01Icon,
       },
@@ -316,38 +387,38 @@ export const courtServiceGroups: FamilyServiceGroup[] = [
     ],
   },
   {
-    id: "copies-documents",
-    title: "النسخ والمستندات",
+    id: "custodial-affairs",
+    title: "شؤون المحضونين",
     description:
-      "طلبات النسخ الرسمية ومحاضر الجلسات والمستندات القضائية ذات الصلة.",
+      "خدمات الحضانة والزيارة وتسليم الأبناء والرعاية النفسية للأبناء.",
     services: [
       {
-        id: "judgment-copy",
-        title: "طلب نسخة حكم",
-        description: "طلب نسخة رسمية من الحكم عبر بوابة الخدمات الإلكترونية",
-        href: litigantRequestsForm,
-        icon: LegalDocument02Icon,
-      },
-      {
-        id: "hearing-record-copy",
-        title: "طلب نسخة محضر جلسة",
-        description: "تقديم طلب للحصول على نسخة من محضر الجلسة",
-        href: litigantRequestsForm,
-        icon: DocumentValidationIcon,
-      },
-      {
-        id: "document-copy",
-        title: "طلب صورة مستند",
-        description: "طلب صورة من المستندات القضائية المتاحة في ملف الدعوى",
-        href: litigantRequestsForm,
-        icon: FileValidationIcon,
-      },
-      {
-        id: "document-verification",
-        title: "التحقق من الوثائق",
-        description: "الوصول إلى خدمة التحقق من صحة الوثائق القضائية",
+        id: "child-custody",
+        title: "الحضانة",
+        description: "الوصول إلى الإجراءات والخدمات المرتبطة بحضانة الأبناء",
         href: electronicCourtPortal,
-        icon: LicenseIcon,
+        icon: ChildIcon,
+      },
+      {
+        id: "child-visitation",
+        title: "الزيارة",
+        description: "الوصول إلى الإجراءات والخدمات المنظمة لزيارة الأبناء",
+        href: electronicCourtPortal,
+        icon: UserGroupIcon,
+      },
+      {
+        id: "child-handover",
+        title: "تسليم الأبناء",
+        description: "الوصول إلى الإجراءات والخدمات المتعلقة بتسليم الأبناء",
+        href: electronicCourtPortal,
+        icon: UserMultiple02Icon,
+      },
+      {
+        id: "child-psychological-care",
+        title: "الرعاية النفسية للأبناء",
+        description: "الوصول إلى خدمات الدعم والرعاية النفسية المخصصة للأبناء",
+        href: electronicCourtPortal,
+        icon: HouseHeartIcon,
       },
     ],
   },
