@@ -628,14 +628,28 @@
 
 @media (max-width: 560px) {
   .court-guide-root {
-    right: max(12px, env(safe-area-inset-right));
-    left: auto;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    top: auto !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    width: 58px;
+    height: 58px;
   }
 
   .court-guide-launcher {
-    width: 72px;
-    height: 72px;
+    width: 58px;
+    height: 58px;
+    border-width: 3px;
+  }
+
+  .court-guide-launcher-portrait {
+    width: 52px;
+    height: 52px;
+  }
+
+  .court-guide-badge {
+    width: 20px;
+    height: 20px;
   }
 
   .court-guide-nudge {

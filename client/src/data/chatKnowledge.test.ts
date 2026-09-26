@@ -68,7 +68,7 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
     expect(result?.answer.id).toBe("about-court");
     expect(result?.answer.links?.map(({ label }) => label)).toEqual([
       "استعراض خدمات المحكمة",
-      "فتح دليل المتقاضين",
+      "فتح دليل الخدمات",
       "الموقع وبيانات التواصل",
       "التصالح والإرشاد الأسري",
       "شؤون المحضونين",

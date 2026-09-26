@@ -242,7 +242,7 @@ const pageCopy = {
     contactEmailSubject: "استفسار عبر موقع محكمة الأسرة",
     services: "الخدمات",
     requirements: "المتطلبات",
-    requirementsGuide: "دليل المتقاضين",
+    requirementsGuide: "دليل الخدمات",
     requirementsIntro:
       "تعرّف على المستندات والمتطلبات اللازمة لكل إجراء في محكمة الأسرة.",
     officialGuide: "عرض الدليل الرسمي",
@@ -381,7 +381,7 @@ const pageCopy = {
     contactEmailSubject: "Family Court website enquiry",
     services: "Services",
     requirements: "Requirements",
-    requirementsGuide: "Litigants' guide",
+    requirementsGuide: "Court services guide",
     requirementsIntro:
       "Review the documents and requirements needed for each Family Court procedure.",
     officialGuide: "View official guide",
