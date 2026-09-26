@@ -57,7 +57,7 @@ const homeCopy = {
     ),
     heroDescription:
       "صفحة لخدمات التقاضي، والخدمات الرضائية، والتصالح والإرشاد الأسري.",
-    heroPrimary: "خدمات المحكمة",
+    heroPrimary: "عرض الخدمات",
     share: "مشاركة الصفحة",
     caption: "مبنى محكمة الأسرة · دولة قطر",
     aboutEyebrow: "عن المحكمة",
@@ -388,6 +388,7 @@ export default function Home() {
                       alt={slide.alt}
                       width={slide.width}
                       height={slide.height}
+                      draggable={false}
                       fetchPriority={index === 0 ? "high" : "auto"}
                     />
                   </div>
