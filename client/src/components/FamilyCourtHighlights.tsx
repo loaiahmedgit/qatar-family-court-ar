@@ -43,16 +43,6 @@ const highlights = [
     iconSrc: "/images/highlights/family-reconciliation.png",
     icon: null,
   },
-  {
-    title: { ar: "شؤون المحضونين", en: "Custodial affairs" },
-    description: {
-      ar: "خدمات الحضانة والزيارة وتسليم الأبناء والرعاية النفسية للأبناء.",
-      en: "Custody, visitation, child handover and psychological care services.",
-    },
-    href: "/family-services/custodial-affairs",
-    iconSrc: "/images/highlights/custodial-affairs.png",
-    icon: null,
-  },
 ] as const;
 
 export function FamilyCourtHighlights() {
@@ -65,10 +55,7 @@ export function FamilyCourtHighlights() {
       aria-labelledby="family-court-highlights-title"
     >
       <header className="family-court-highlights-heading">
-        <h2
-          id="family-court-highlights-title"
-          className="section-shell"
-        >
+        <h2 id="family-court-highlights-title" className="section-shell">
           {isEnglish ? "Family Court services" : "خدمات المحكمة"}
         </h2>
       </header>

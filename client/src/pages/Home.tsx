@@ -12,6 +12,8 @@ import {
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import useEmblaCarousel from "embla-carousel-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -19,6 +21,8 @@ import {
   ArrowUpLeft,
   ArrowUpRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   FileText,
   Printer,
   Share2,
@@ -34,6 +38,7 @@ import { sitePath } from "../lib/sitePath";
 import familyCourtLogo from "../assets/brand/family-court-logo.png";
 import heroPhotoArabic from "../assets/hero/family-court-ar.png";
 import heroPhotoEnglish from "../assets/hero/family-court-en.png";
+import traditionalCourtPhoto from "../assets/hero/traditional-court-hd.png";
 import guidanceIllustration from "../assets/illustrations/family-guidance.png";
 import portalPattern from "../assets/patterns/portal-geometric.png";
 
@@ -50,9 +55,8 @@ const homeCopy = {
         <em>دولة قطر</em>
       </>
     ),
-    heroVerse:
-      "﴿وَلَا تَنْسَوُا الْفَضْلَ بَيْنَكُمْ إِنَّ اللَّهَ بِمَا تَعْمَلُونَ بَصِيرٌ﴾",
-    heroVerseCitation: "سورة البقرة، الآية 237",
+    heroDescription:
+      "صفحة لخدمات التقاضي، والخدمات الرضائية، والتصالح والإرشاد الأسري.",
     heroPrimary: "خدمات المحكمة",
     share: "مشاركة الصفحة",
     caption: "مبنى محكمة الأسرة · دولة قطر",
@@ -68,9 +72,9 @@ const homeCopy = {
       "تختص محكمة الأسرة بالفصل في الدعاوى والمنازعات المتعلقة بمسائل الأسرة والتركات، من خلال دوائر قضائية متخصصة تعمل على تنظيم الإجراءات وتيسير وصول المتقاضين إلى الخدمات والمعلومات المرتبطة بقضايا الأسرة.",
     aboutAction: "تعرّف على اختصاصات المحكمة",
     beforeProcedure: "قبل بدء الإجراء",
-    requirementsTitle: ["دليل", "المتطلبات"],
+    requirementsTitle: ["دليل", "المتقاضين"],
     requirementsLead: "جهّز مستنداتك قبل تقديم الطلب",
-    requirementsLabel: "فئات دليل المتطلبات",
+    requirementsLabel: "فئات دليل المتقاضين",
     requirementsAction: "عرض الدليل الرسمي",
     legalEyebrow: "الإطار التشريعي المتصل",
     legalTitle: "قانون الأسرة رقم (22) لسنة 2006",
@@ -118,7 +122,7 @@ const homeCopy = {
     pageTools: "أدوات الصفحة",
     home: "الرئيسية",
     services: "خدمات المحكمة",
-    requirements: "دليل المتطلبات",
+    requirements: "دليل المتقاضين",
     about: "عن المحكمة",
     council: "المجلس الأعلى للقضاء",
     courtPage: "صفحة محكمة الأسرة",
@@ -138,9 +142,8 @@ const homeCopy = {
         <em>in the State of Qatar</em>
       </>
     ),
-    heroVerse:
-      "“Do not forget graciousness between you. Surely Allah is All-Seeing of what you do.”",
-    heroVerseCitation: "Quran 2:237",
+    heroDescription:
+      "A page for litigation services, consensual services, and family reconciliation and guidance.",
     heroPrimary: "Explore Court services",
     share: "Share page",
     caption: "Family Court building · State of Qatar",
@@ -156,9 +159,9 @@ const homeCopy = {
       "The Family Court hears cases and disputes concerning family and inheritance matters through specialised judicial circuits that organise procedures and make related Court services and information easier to access.",
     aboutAction: "Explore the Court's jurisdiction",
     beforeProcedure: "Before you begin",
-    requirementsTitle: ["Requirements", "guide"],
+    requirementsTitle: ["Litigants'", "guide"],
     requirementsLead: "Prepare your documents before submitting a request",
-    requirementsLabel: "Requirements guide categories",
+    requirementsLabel: "Litigants' guide categories",
     requirementsAction: "View official guide",
     legalEyebrow: "Related legal framework",
     legalTitle: "Family Law No. 22 of 2006",
@@ -212,7 +215,7 @@ const homeCopy = {
     pageTools: "Page tools",
     home: "Home",
     services: "Court services",
-    requirements: "Requirements guide",
+    requirements: "Litigants' guide",
     about: "About the Court",
     council: "Supreme Judiciary Council",
     courtPage: "Family Court page",
@@ -228,9 +231,56 @@ export default function Home() {
   const { language, direction } = useLanguage();
   const copy = homeCopy[language];
   const isEnglish = language === "en";
+  const reducedMotion = useReducedMotion();
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const [heroCarouselRef, heroCarouselApi] = useEmblaCarousel({
+    align: "start",
+    direction: "ltr",
+    loop: true,
+  });
   const [openRequirements, setOpenRequirements] = useState<Set<string>>(
     () => new Set([familyRequirements[0].id])
   );
+
+  const heroSlides = [
+    {
+      id: "family-court",
+      src: isEnglish ? heroPhotoEnglish : heroPhotoArabic,
+      alt: isEnglish
+        ? "Family Court building in the State of Qatar"
+        : "مبنى محكمة الأسرة في دولة قطر",
+      label: isEnglish ? "Family Court building" : "مبنى محكمة الأسرة",
+      title: copy.heroTitle,
+      description: copy.heroDescription,
+      width: 1672,
+      height: 941,
+    },
+    {
+      id: "traditional-court",
+      src: traditionalCourtPhoto,
+      alt: isEnglish
+        ? "Family Documentation Department building"
+        : "مبنى إدارة التوثيقات الأسرية",
+      label: isEnglish
+        ? "Family Documentation Department"
+        : "إدارة التوثيقات الأسرية",
+      title: isEnglish ? (
+        <>Family Documentation Department</>
+      ) : (
+        <>
+          إدارة التوثيقات
+          <br />
+          <em>الأسرية</em>
+        </>
+      ),
+      description: "",
+      width: 1672,
+      height: 941,
+    },
+  ] as const;
+
+  const activeHeroContent =
+    heroSlides[activeHeroSlide] ?? heroSlides[0];
 
   useEffect(() => {
     document.title = isEnglish
@@ -238,10 +288,43 @@ export default function Home() {
       : "محكمة الأسرة دولة قطر";
   }, [isEnglish]);
 
+  useEffect(() => {
+    if (!heroCarouselApi) return;
+
+    const syncSelectedSlide = () => {
+      setActiveHeroSlide(heroCarouselApi.selectedScrollSnap());
+    };
+
+    syncSelectedSlide();
+    heroCarouselApi.on("select", syncSelectedSlide);
+
+    return () => {
+      heroCarouselApi.off("select", syncSelectedSlide);
+    };
+  }, [heroCarouselApi]);
+
+  useEffect(() => {
+    if (!heroCarouselApi || reducedMotion) return;
+
+    const interval = window.setInterval(() => {
+      heroCarouselApi.scrollPrev();
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, [heroCarouselApi, reducedMotion]);
+
+  const showPreviousHeroSlide = () => {
+    heroCarouselApi?.scrollPrev();
+  };
+
+  const showNextHeroSlide = () => {
+    heroCarouselApi?.scrollNext();
+  };
+
   const sharePage = async () => {
     const shareData = {
       title: isEnglish ? "Family Court" : "محكمة الأسرة",
-      text: copy.heroVerse,
+      text: copy.heroDescription,
       url: window.location.href,
     };
     try {
@@ -286,44 +369,119 @@ export default function Home() {
       />
 
       <main id="content">
-        <section className="hero-section" aria-labelledby="hero-title">
-          <img
-            className="hero-photo"
-            src={isEnglish ? heroPhotoEnglish : heroPhotoArabic}
-            alt={
-              isEnglish
-                ? "Family Court building in the State of Qatar"
-                : "مبنى محكمة الأسرة في دولة قطر"
-            }
-            width={1672}
-            height={941}
-            fetchPriority="high"
-          />
-          <div className="hero-overlay" />
-          <div className="hero-shell">
-            <div className="hero-copy">
-              <p className="hero-kicker">{copy.heroKicker}</p>
-              <h1 id="hero-title">{copy.heroTitle}</h1>
-              <blockquote className="hero-verse">
-                <p>{copy.heroVerse}</p>
-                <cite>{copy.heroVerseCitation}</cite>
-              </blockquote>
-              <div className="hero-buttons">
-                <a className="primary-button" href="#services">
-                  {copy.heroPrimary}{" "}
-                  {isEnglish ? (
-                    <ArrowRight size={19} aria-hidden="true" />
-                  ) : (
-                    <ArrowLeft size={19} aria-hidden="true" />
-                  )}
-                </a>
-                <button className="quiet-button" onClick={sharePage}>
-                  <Share2 size={17} /> {copy.share}
-                </button>
+        <section
+          className="hero-section hero-split"
+          aria-labelledby="hero-title"
+        >
+          <div className="hero-visual" aria-live="off">
+            <div className="hero-carousel-viewport" ref={heroCarouselRef}>
+              <div className="hero-slides-track">
+                {heroSlides.map((slide, index) => (
+                  <div
+                    className={`hero-slide hero-slide-${slide.id}`}
+                    aria-hidden={index !== activeHeroSlide}
+                    key={slide.id}
+                  >
+                    <img
+                      className="hero-slide-image"
+                      src={slide.src}
+                      alt={slide.alt}
+                      width={slide.width}
+                      height={slide.height}
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div
+              className="hero-carousel-controls"
+              aria-label={isEnglish ? "Building image controls" : "التحكم في صور المباني"}
+            >
+              <button
+                className="hero-carousel-arrow hero-carousel-previous"
+                type="button"
+                aria-label={isEnglish ? "Previous image" : "الصورة السابقة"}
+                onClick={showPreviousHeroSlide}
+              >
+                {isEnglish ? <ChevronLeft /> : <ChevronRight />}
+              </button>
+              <button
+                className="hero-carousel-arrow hero-carousel-next"
+                type="button"
+                aria-label={isEnglish ? "Next image" : "الصورة التالية"}
+                onClick={showNextHeroSlide}
+              >
+                {isEnglish ? <ChevronRight /> : <ChevronLeft />}
+              </button>
+              <div className="hero-carousel-dots" aria-hidden="true">
+                {heroSlides.map((slide, index) => (
+                  <span
+                    className={index === activeHeroSlide ? "is-active" : undefined}
+                    key={slide.id}
+                  />
+                ))}
               </div>
             </div>
           </div>
-          <div className="hero-caption">{copy.caption}</div>
+          <div className="hero-content-panel">
+            <div className="hero-shell">
+              <div className="hero-copy">
+                <AnimatePresence initial={false} mode="wait">
+                  <motion.div
+                    className={`hero-text-transition${
+                      activeHeroContent.description ? "" : " is-compact"
+                    }`}
+                    key={activeHeroContent.id}
+                    initial={{
+                      opacity: reducedMotion ? 1 : 0,
+                      clipPath: reducedMotion
+                        ? "inset(0 0 0 0)"
+                        : "inset(0 0 0 100%)",
+                      x: reducedMotion ? 0 : 26,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      clipPath: "inset(0 0 0 0)",
+                      x: 0,
+                    }}
+                    exit={{
+                      opacity: reducedMotion ? 1 : 0,
+                      clipPath: reducedMotion
+                        ? "inset(0 0 0 0)"
+                        : "inset(0 100% 0 0)",
+                      x: reducedMotion ? 0 : -18,
+                    }}
+                    transition={{
+                      duration: reducedMotion ? 0 : 0.34,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <p className="hero-kicker">{copy.heroKicker}</p>
+                    <h1 id="hero-title">{activeHeroContent.title}</h1>
+                    {activeHeroContent.description ? (
+                      <div className="hero-verse">
+                        <p>{activeHeroContent.description}</p>
+                      </div>
+                    ) : null}
+                    <div className="hero-buttons">
+                      <a className="primary-button" href="#services">
+                        {copy.heroPrimary}{" "}
+                        {isEnglish ? (
+                          <ArrowRight size={19} aria-hidden="true" />
+                        ) : (
+                          <ArrowLeft size={19} aria-hidden="true" />
+                        )}
+                      </a>
+                      <button className="quiet-button" onClick={sharePage}>
+                        <Share2 size={17} /> {copy.share}
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
         </section>
 
         <FamilyCourtHighlights />

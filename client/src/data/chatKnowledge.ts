@@ -172,7 +172,7 @@ const staticKnowledge: KnowledgeEntry[] = [
       "تختص محكمة الأسرة بالدعاوى والمنازعات المتعلقة بالأسرة والتركات، وتعرض خدمات التقاضي والخدمات الرضائية والتصالح والإرشاد الأسري وشؤون المحضونين. اكتب موضوعك بطريقتك وسأوجّهك إلى المسار المناسب.",
     links: [
       pageLink("استعراض خدمات المحكمة", "/family-services#services-view"),
-      pageLink("فتح دليل المتطلبات", "/family-services#requirements-guide"),
+      pageLink("فتح دليل المتقاضين", "/family-services#requirements-guide"),
       pageLink("الموقع وبيانات التواصل", "/family-services#about-location"),
       pageLink(
         "التصالح والإرشاد الأسري",
@@ -636,9 +636,9 @@ const staticKnowledge: KnowledgeEntry[] = [
   },
   {
     id: "requirements-overview",
-    title: "دليل المتطلبات",
+    title: "دليل المتقاضين",
     examples: [
-      "دليل المتطلبات",
+      "دليل المتقاضين",
       "ما المستندات المطلوبة",
       "وش الاوراق المطلوبة",
       "شنو اجيب",
@@ -647,9 +647,9 @@ const staticKnowledge: KnowledgeEntry[] = [
       "قبل لا اروح المحكمة شنو اخذ معاي",
       "شنو اجهز قبل ما اروح",
     ],
-    text: "دليل المتطلبات يجمع المتطلبات التمهيدية للطلاق والحضانة والنفقة والتوثيق. اختر نوع الإجراء لعرض التفاصيل.",
+    text: "دليل المتقاضين يجمع المتطلبات التمهيدية للطلاق والحضانة والنفقة والتوثيق. اختر نوع الإجراء لعرض التفاصيل.",
     links: [
-      pageLink("فتح دليل المتطلبات", "/family-services#requirements-guide"),
+      pageLink("فتح دليل المتقاضين", "/family-services#requirements-guide"),
     ],
   },
   {
@@ -1233,7 +1233,7 @@ const englishStaticKnowledge: KnowledgeEntry[] = [
   },
   {
     id: "requirements-overview",
-    title: "Requirements guide",
+    title: "Litigants' guide",
     examples: [
       "requirements guide",
       "what documents do i need",
@@ -1948,12 +1948,12 @@ const serviceReplyOverrides: Record<
   Pick<KnowledgeEntry, "text" | "gulfText" | "links">
 > = {
   "file-new-case": {
-    text: "الخدمة المناسبة هي «قيد دعوى جديدة». افتح البوابة الرسمية، وسجّل الدخول، واختر نوع الدعوى، ثم أكمل البيانات وأرفق المستندات المطلوبة. راجع دليل المتطلبات حسب موضوع الدعوى قبل الإرسال.",
+    text: "الخدمة المناسبة هي «قيد دعوى جديدة». افتح البوابة الرسمية، وسجّل الدخول، واختر نوع الدعوى، ثم أكمل البيانات وأرفق المستندات المطلوبة. راجع دليل المتقاضين حسب موضوع الدعوى قبل الإرسال.",
     gulfText:
-      "الخدمة المناسبة لك هي «قيد دعوى جديدة». افتح البوابة الرسمية وسجّل الدخول، واختَر نوع الدعوى، وبعدها كمّل البيانات وارفع المستندات المطلوبة. راجع دليل المتطلبات حسب موضوع دعواك قبل الإرسال.",
+      "الخدمة المناسبة لك هي «قيد دعوى جديدة». افتح البوابة الرسمية وسجّل الدخول، واختَر نوع الدعوى، وبعدها كمّل البيانات وارفع المستندات المطلوبة. راجع دليل المتقاضين حسب موضوع دعواك قبل الإرسال.",
     links: [
       externalLink("فتح خدمة قيد دعوى جديدة", "https://eservices.sjc.gov.qa/"),
-      pageLink("مراجعة دليل المتطلبات", "/family-services#requirements-guide"),
+      pageLink("مراجعة دليل المتقاضين", "/family-services#requirements-guide"),
     ],
   },
 };
@@ -3028,13 +3028,13 @@ export function buildGuideReply(
         language === "ar"
           ? [
               pageLink("عرض الخدمات", "/family-services#services-view"),
-              pageLink("دليل المتطلبات", "/family-services#requirements-guide"),
+              pageLink("دليل المتقاضين", "/family-services#requirements-guide"),
               contactPage,
             ]
           : [
               pageLink("View services", "/family-services#services-view"),
               pageLink(
-                "Requirements guide",
+                "Litigants' guide",
                 "/family-services#requirements-guide"
               ),
               contactPageEn,
