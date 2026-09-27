@@ -23,8 +23,8 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
     ["أبي أتابع ملف الصلح شلون؟", "service-reconciliation-follow-up"],
     ["نبي نتصالح وين نسجل", "service-family-reconciliation-request"],
     ["أبي استشارة زوجية الرابط وين", "service-family-guidance"],
-    ["انا محتاجه اخلعه", "service-divorce-dislocation"],
-    ["أبي أخلع زوجي شلون أقدم؟", "service-divorce-dislocation"],
+    ["انا محتاجه اخلعه", "khula-pathway"],
+    ["أبي أخلع زوجي شلون أقدم؟", "khula-pathway"],
     ["وين المحكمة ومتى دوامهم", "court-visit"],
     ["ضيعت وثيقة الزواج شلون أطلع بدل فاقد؟", "lost-marriage-document"],
     [
@@ -45,6 +45,68 @@ describe("Family Court guide Gulf Arabic intent matching", () => {
     ["متى الدوام", "working-hours"],
   ])("handles short Gulf phrasing: %s", (question, expectedId) => {
     expect(match(question)?.answer.id).toBe(expectedId);
+  });
+
+  it.each([
+    ["الخلع", "khula-pathway"],
+    ["كيف أبدأ إجراءات الخلع؟", "khula-pathway"],
+    ["زوجي رافض الخلع", "khula-pathway"],
+    ["عايزة أرفع دعوى خلع", "khula-pathway"],
+    ["إثبات الخلع", "service-divorce-dislocation"],
+    ["الخلع تم وعايزة أوثقه", "service-divorce-dislocation"],
+    ["عايزة وثيقة خلع", "service-divorce-dislocation"],
+    ["اتفقنا على الخلع ونبي نثبته", "service-divorce-dislocation"],
+  ])("distinguishes starting khula from documenting it: %s", (question, expectedId) => {
+    expect(match(question)?.answer.id).toBe(expectedId);
+  });
+
+  it("answers a general khula request with both routes instead of one proof service", () => {
+    const reply = buildGuideReply("انا اريد الخلع", 1, "ar");
+    expect(reply.intentId).toBe("khula-pathway");
+    expect(reply.text).toContain("مساران");
+    expect(reply.links?.map(({ label }) => label)).toEqual([
+      "بدء دعوى من خدمات التقاضي",
+      "فتح خدمة إثبات الخلع",
+      "مراجعة متطلبات الطلاق",
+    ]);
+  });
+
+  it.each([
+    ["الزوج رافض الطلاق وعايزة أرفع قضية", "divorce-pathway"],
+    ["طلاق بالتراضي", "service-friendly-divorce"],
+    ["أصدر إشهاد طلاق", "service-divorce-creation"],
+    ["الأطفال مع الأب وعايزة أرفع حضانة", "custody-pathway"],
+    ["ما يصرف على الأطفال", "maintenance-pathway"],
+    ["شهادة نفقة طفل", "service-child-support"],
+    ["إثبات استمرار الزواج", "service-marriage-continuity"],
+    ["شهادة إثبات عدم الزواج", "service-non-marriage-proof"],
+    ["توثيق الرجعة", "service-remarriage"],
+    ["تصديق عقد زواج من خارج الدولة", "service-external-marriage-attestation"],
+    ["نبي نتصالح", "service-family-reconciliation-request"],
+    ["وين وصل ملف التصالح", "service-reconciliation-follow-up"],
+  ])("separates a general situation from a specific proof or follow-up service: %s", (question, expectedId) => {
+    expect(match(question)?.answer.id).toBe(expectedId);
+  });
+
+  it.each([
+    ["khula", "khula-pathway"],
+    ["how do I start khula", "khula-pathway"],
+    ["my husband refuses khula", "khula-pathway"],
+    ["khula confirmation", "service-divorce-dislocation"],
+    ["document an agreed khula", "service-divorce-dislocation"],
+  ])("keeps the same khula distinction in English: %s", (question, expectedId) => {
+    expect(retrieveGuideAnswer(question, "en")?.answer.id).toBe(expectedId);
+  });
+
+  it.each([
+    ["my spouse refuses divorce", "divorce-pathway"],
+    ["mutual divorce", "service-friendly-divorce"],
+    ["issue a divorce certificate", "service-divorce-creation"],
+    ["start a custody case", "custody-pathway"],
+    ["my spouse does not pay child support", "maintenance-pathway"],
+    ["child maintenance certificate", "service-child-support"],
+  ])("separates general and documentary routes in English: %s", (question, expectedId) => {
+    expect(retrieveGuideAnswer(question, "en")?.answer.id).toBe(expectedId);
   });
 
   it.each(["الطقس حلو اليوم", "أبي أشتري سيارة"])(

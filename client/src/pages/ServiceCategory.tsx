@@ -1,8 +1,6 @@
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
-import familyCourtBuildingArabic from "../assets/hero/family-court-ar.png";
-import familyCourtBuildingEnglish from "../assets/hero/family-court-en.png";
 import { FamilyCourtFooter } from "../components/FamilyCourtFooter";
 import { ServiceGroupContent } from "../components/ServiceGroupContent";
 import { SiteHeader } from "../components/SiteHeader";
@@ -76,7 +74,6 @@ export default function ServiceCategory({ groupId }: ServiceCategoryProps) {
         home: "Home",
         services: "Court services",
         breadcrumb: "Breadcrumb",
-        buildingAlt: "Family Court building in the State of Qatar",
         pageSections: "Page sections",
         about: "About the Court",
         servicesLabel: "Services",
@@ -87,7 +84,6 @@ export default function ServiceCategory({ groupId }: ServiceCategoryProps) {
         home: "الرئيسية",
         services: "خدمات المحكمة",
         breadcrumb: "مسار الصفحة",
-        buildingAlt: "مبنى محكمة الأسرة في دولة قطر",
         pageSections: "فهرس الصفحة",
         about: "عن المحكمة",
         servicesLabel: "الخدمات",
@@ -97,13 +93,26 @@ export default function ServiceCategory({ groupId }: ServiceCategoryProps) {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = `${groupCopy.title} | ${copy.titleSuffix}`;
+    let contentFrame: number | undefined;
     const frame = window.requestAnimationFrame(() => {
       const anchor = window.location.hash.slice(1);
-      if (anchor) document.getElementById(anchor)?.scrollIntoView({ block: "start" });
-      else window.scrollTo(0, 0);
+      if (anchor) {
+        document.getElementById(anchor)?.scrollIntoView({ block: "start" });
+      } else if (window.matchMedia("(max-width: 760px)").matches) {
+        contentFrame = window.requestAnimationFrame(() => {
+          document
+            .getElementById("category-services")
+            ?.scrollIntoView({ block: "start" });
+        });
+      } else {
+        window.scrollTo(0, 0);
+      }
     });
     return () => {
       window.cancelAnimationFrame(frame);
+      if (contentFrame !== undefined) {
+        window.cancelAnimationFrame(contentFrame);
+      }
       document.title = previousTitle;
     };
   }, [copy.titleSuffix, groupCopy.title]);
@@ -123,16 +132,6 @@ export default function ServiceCategory({ groupId }: ServiceCategoryProps) {
       />
 
       <section className="quf-hero" aria-labelledby="category-page-title">
-        <img
-          src={
-            isEnglish ? familyCourtBuildingEnglish : familyCourtBuildingArabic
-          }
-          alt={copy.buildingAlt}
-          width={1672}
-          height={941}
-          fetchPriority="high"
-        />
-        <div className="quf-hero-shade" aria-hidden="true" />
         <div className="section-shell quf-hero-inner">
           <nav aria-label={copy.breadcrumb}>
             <a href={sitePath("/")}>{copy.home}</a>
@@ -267,6 +266,7 @@ export default function ServiceCategory({ groupId }: ServiceCategoryProps) {
 
         <div className="quf-main">
           <section
+            id="category-services"
             className="quf-category-content"
             aria-labelledby="category-services-heading"
           >

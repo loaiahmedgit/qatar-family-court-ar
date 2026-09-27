@@ -29,6 +29,10 @@
   background: #12304a;
 }
 
+.quf-category-page .quf-hero {
+  background: #0f3c65;
+}
+
 .quf-hero > img,
 .quf-hero-shade {
   position: absolute;
@@ -1525,6 +1529,10 @@
 
   .quf-category-shell {
     padding-block: 22px 56px;
+  }
+
+  .quf-category-content {
+    scroll-margin-top: 84px;
   }
 
   .quf-category-content > header {

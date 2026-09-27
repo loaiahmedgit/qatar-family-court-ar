@@ -713,6 +713,36 @@ const staticKnowledge: KnowledgeEntry[] = [
     ],
   },
   {
+    id: "khula-pathway",
+    title: "مسار الخلع",
+    examples: [
+      "الخلع",
+      "ابي اخلع",
+      "كيف اقدم خلع",
+      "كيف ابدا اجراءات الخلع",
+      "انا محتاجه اخلعه",
+      "عايزه اخلع زوجي",
+      "ابي اخلع زوجي",
+      "شلون اقدم على الخلع",
+      "زوجي رافض الخلع",
+      "ارفع دعوى خلع",
+    ],
+    text: "الخلع له مساران مختلفان: إذا لم يتم الخلع بعد أو يوجد نزاع، فابدأ بقيد دعوى جديدة ضمن خدمات التقاضي. أمّا إذا تم الخلع أو اتفق الطرفان عليه وتريد توثيقه، فاستخدم خدمة «إثبات الخلع». اختر المسار المطابق لحالتك.",
+    gulfText:
+      "الخلع له مساران: إذا الخلع ما تم أو فيه نزاع، ابدأ بقيد دعوى جديدة من خدمات التقاضي. وإذا تم الخلع أو اتفقتوا عليه وتبون توثقونه، استخدموا خدمة «إثبات الخلع». اختَر الحالة اللي تنطبق عليك.",
+    links: [
+      pageLink("بدء دعوى من خدمات التقاضي", "/family-services/litigation"),
+      externalLink(
+        "فتح خدمة إثبات الخلع",
+        "https://tawtheeqat.sjc.gov.qa/SJC/#/services/divorce/divorce-dislocation"
+      ),
+      pageLink(
+        "مراجعة متطلبات الطلاق",
+        "/family-services#requirements-divorce"
+      ),
+    ],
+  },
+  {
     id: "custody-pathway",
     title: "مسار الحضانة",
     examples: [
@@ -1273,6 +1303,30 @@ const englishStaticKnowledge: KnowledgeEntry[] = [
     ],
   },
   {
+    id: "khula-pathway",
+    title: "Khula pathway",
+    examples: [
+      "khula",
+      "khul divorce",
+      "wife initiated divorce",
+      "how do i start khula",
+      "my husband refuses khula",
+      "file a khula case",
+    ],
+    text: "Khula can involve two different routes. If it has not happened yet or is disputed, start by filing a new case through litigation services. If the parties have completed or agreed the khula and need to document it, use the Khula Confirmation service. Choose the route that matches your situation.",
+    links: [
+      pageLink("Start through litigation services", "/family-services/litigation"),
+      externalLink(
+        "Open Khula Confirmation",
+        "https://tawtheeqat.sjc.gov.qa/SJC/#/services/divorce/divorce-dislocation"
+      ),
+      pageLink(
+        "Review divorce requirements",
+        "/family-services#requirements-divorce"
+      ),
+    ],
+  },
+  {
     id: "custody-pathway",
     title: "Custody pathway",
     examples: [
@@ -1550,14 +1604,11 @@ const serviceExamples: Record<string, string[]> = {
     "ابي مأذون زواج",
   ],
   "divorce-dislocation": [
-    "ابي اخلع",
     "اثبات الخلع",
-    "كيف اقدم خلع",
     "وثيقة خلع",
-    "انا محتاجه اخلعه",
-    "عايزه اخلع زوجي",
-    "ابي اخلع زوجي",
-    "شلون اقدم على الخلع",
+    "توثيق خلع تم",
+    "اصدار اثبات الخلع",
+    "اتفقنا على الخلع ونبي نوثقه",
   ],
   remarriage: [
     "ابي ارجع زوجتي",
@@ -1759,9 +1810,9 @@ const englishServiceExamples: Record<string, string[]> = {
     "who can perform the marriage",
   ],
   "divorce-dislocation": [
-    "khula",
-    "khul divorce",
-    "wife initiated divorce",
+    "khula confirmation",
+    "khula certificate",
+    "document an agreed khula",
     "confirm a khul",
   ],
   remarriage: [
@@ -2664,9 +2715,22 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
     const divorce = /\b(divorce|divorced|separate|separation)\b/.test(
       normalized
     );
+    const amicableDivorce =
+      /\b(mutual|amicable|consensual|both agree|agreed divorce)\b/.test(
+        normalized
+      );
+    const divorceDocumentation =
+      /\b(issue|create|get|document|record|confirm)\b.{0,24}\b(divorce certificate|divorce document|divorce papers|divorce record)\b|\b(divorce certificate|divorce document|divorce papers|divorce record)\b/.test(
+        normalized
+      );
     const custody = /\b(custody|custodial)\b/.test(normalized);
     const maintenance =
       /\b(maintenance|alimony|child support|does not pay|not paying)\b/.test(
+        normalized
+      );
+    const khula = /\b(khula|khul)\b/.test(normalized);
+    const khulaDocumentation =
+      /\b(proof|prove|confirm|confirmation|certificate|document|record|register|completed|agreed)\b/.test(
         normalized
       );
 
@@ -2681,6 +2745,20 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
       if (custody) addIntentBonus(bonuses, "custody-pathway", 0.56);
       if (maintenance) addIntentBonus(bonuses, "maintenance-pathway", 0.58);
     }
+
+    if (khula) {
+      addIntentBonus(
+        bonuses,
+        khulaDocumentation
+          ? "service-divorce-dislocation"
+          : "khula-pathway",
+        0.98
+      );
+    }
+    if (divorce && amicableDivorce)
+      addIntentBonus(bonuses, "service-friendly-divorce", 0.98);
+    else if (divorce && divorceDocumentation && !documentCue)
+      addIntentBonus(bonuses, "service-divorce-creation", 0.98);
 
     if (
       /\b(reconciliation|mediation)\b/.test(normalized) &&
@@ -2708,6 +2786,11 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
       normalized
     );
   const divorce = /(طلاق|الطلق|اطلق|اتطلق|تطلق|انفصل)/.test(normalized);
+  const amicableDivorce = /(بالتراضي|تراضي|متفقين|طلاق ودي)/.test(normalized);
+  const divorceDocumentation =
+    /(اصدار|اصدر|انشاء|انشي|اوثق|توثيق|استخراج|اطلع).{0,24}(اشهاد|وثيقه).{0,12}طلاق|(اشهاد|وثيقه).{0,12}طلاق/.test(
+      normalized
+    );
   const custody = /(حضانه|حضان)/.test(normalized);
   const maintenance = /(نفقه|مصاريف|مصروف|يصرف|ما يدفع|مايدفع)/.test(
     normalized
@@ -2727,6 +2810,11 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
     if (maintenance) addIntentBonus(bonuses, "maintenance-pathway", 0.62);
   }
 
+  if (divorce && amicableDivorce)
+    addIntentBonus(bonuses, "service-friendly-divorce", 0.98);
+  else if (divorce && divorceDocumentation && !documentCue)
+    addIntentBonus(bonuses, "service-divorce-creation", 0.98);
+
   const reconciliation = /(صلح|تصالح)/.test(normalized);
   const followUp = /(اتابع|تابع|متابعه|ملف|موعد|وين وصل)/.test(normalized);
   if (reconciliation && followUp)
@@ -2740,8 +2828,17 @@ function getIntentBonuses(question: string, language: GuideLanguage) {
     );
   if (maritalGuidance) addIntentBonus(bonuses, "service-family-guidance", 0.86);
 
-  if (/(الخلع|اخلع|خلع زوج|اخلعه)/.test(normalized)) {
-    addIntentBonus(bonuses, "service-divorce-dislocation", 0.86);
+  const khula = /(الخلع|خلع|اختلع|اخلع|اخلعه)/.test(normalized);
+  const khulaDocumentation =
+    /(اثبات|توثيق|اوثق|وثيقه|اشهاد|شهاده|اصدار|استخراج|تم|حصل|وقع|اتفقنا).{0,30}(الخلع|خلع)|(الخلع|خلع).{0,30}(اثبات|توثيق|اوثق|وثيقه|اشهاد|شهاده|اصدار|استخراج|تم|حصل|وقع|اتفقنا)/.test(
+      normalized
+    );
+  if (khula) {
+    addIntentBonus(
+      bonuses,
+      khulaDocumentation ? "service-divorce-dislocation" : "khula-pathway",
+      0.98
+    );
   }
 
   if (custody && maintenance)
